@@ -7,7 +7,9 @@ export const MainLayout: VFC = (page) => {
   return (
     <div>
       <Header />
-      <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
+      <main>
+        <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
+      </main>
       <Footer />
     </div>
   );
