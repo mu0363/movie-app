@@ -1,0 +1,41 @@
+{
+  "React FC": {
+    "prefix": "fc",
+    "body": [
+      "import type { VFC } from \"react\";",
+      "",
+      "export const ${1:$TM_FILENAME_BASE}: VFC = () => {",
+      "  return (",
+      "    <div>",
+      "      <h1>Enter</h1>",
+      "    </div>",
+      "  );",
+      "};",
+      ""
+    ],
+    "description": "React boilerplate"
+  },
+  "Next.js page": {
+    "prefix": "np",
+    "body": [
+      "import type { CustomNextPage } from \"next\";",
+      "import { MainLayout } from \"pages/_Layout\";",
+      "",
+      "const ${1:$TM_FILENAME_BASE}: CustomNextPage = () => {",
+      "  return (",
+      "    <div>",
+      "      <h1>${1:$TM_FILENAME_BASE}</h1>",
+      "    </div>",
+      "  );",
+      "};",
+      "",
+      "${1:$TM_FILENAME_BASE}.getLayout = MainLayout;",
+      "",
+      "export default ${1:$TM_FILENAME_BASE};",
+      ""
+    ],
+    "description": "Next.js page boilerplate"
+  }
+}
+
+// https://snippet-generator.app/?description=&tabtrigger=&snippet=import+type+%7B+VFC+%7D+from+%22react%22%3B%0A%0Aexport+const+App%3A+VFC+%3D+%28%29+%3D%3E+%7B%0A++return+%28%0A++++%3Cdiv%3E%0A++++++%3Ch1%3EEnter%3C%2Fh1%3E%0A++++%3C%2Fdiv%3E%0A++%29%3B%0A%7D%3B%0A&mode=vscode
