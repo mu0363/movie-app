@@ -5,7 +5,7 @@ import { LayoutErrorBoundary } from "./LayoutErrorBoundary";
 
 export const MainLayout: VFC = (page) => {
   return (
-    <div>
+    <div className="relative h-screen text-gray-600 bg-gray-100">
       <Header />
       <main>
         <LayoutErrorBoundary>{page}</LayoutErrorBoundary>
