@@ -1,14 +1,18 @@
 import type { CustomNextPage } from "next";
-import { MainLayout } from "./_Layout";
+import Link from "next/link";
+import { SubLayout } from "./_Layout/SubLayout";
 
 const Home: CustomNextPage = () => {
   return (
     <div>
-      <h1>Main</h1>
+      <p>Welcome public page</p>
+      <Link href="/signin">
+        <a>Sing In</a>
+      </Link>
     </div>
   );
 };
 
-Home.getLayout = MainLayout;
+Home.getLayout = SubLayout;
 
 export default Home;
