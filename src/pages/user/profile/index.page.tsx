@@ -1,28 +1,59 @@
 import type { CustomNextPage } from "next";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
+import { ChangeEvent, useState } from "react";
 import { useUser } from "hooks/useUser";
-import { MainLayout } from "pages/_Layout";
+import { SubLayout } from "pages/_Layout/SubLayout";
+import { supabase } from "utils/supabaseClient";
 
 const Profile: CustomNextPage = () => {
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
+  const [fullName, setFullName] = useState("");
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  const { user, signOut } = useUser();
 
-  const { user } = useUser();
+  const handleSetUsername = (e: ChangeEvent<HTMLInputElement>) => {
+    setFullName(e.target.value);
+  };
 
-  useEffect(() => {
-    if (!user) {
-      router.replace("/signin");
+  const handleUpdateProfile = async () => {
+    try {
+      setIsLoading(true);
+      const updates = {
+        id: user.id,
+        full_name: fullName,
+        updated_at: new Date(),
+      };
+
+      const { error } = await supabase.from("users").upsert(updates, {
+        returning: "minimal", // Don't return the value after inserting
+      });
+
+      if (error) {
+        throw error;
+      }
+    } catch (error) {
+      console.error(error);
+
+      // alert(error.message);
+    } finally {
+      setIsLoading(false);
     }
-  }, [user, router]);
+  };
 
   return (
     <div>
-      <h1>Profile</h1>
       <p>{user?.email}</p>
+      <div>
+        <label htmlFor="username">Name</label>
+        <input id="username" type="text" value={fullName || ""} onChange={handleSetUsername} />
+      </div>
+
+      <button className="p-3 mt-10 bg-white rounded-md" onClick={handleUpdateProfile} disabled={isLoading}>
+        {isLoading ? "Loading ..." : "Update"}
+      </button>
     </div>
   );
 };
 
-Profile.getLayout = MainLayout;
+Profile.getLayout = SubLayout;
 
 export default Profile;
