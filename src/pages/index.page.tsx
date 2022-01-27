@@ -1,6 +1,7 @@
 import type { CustomNextPage } from "next";
 import Link from "next/link";
 import { SubLayout } from "./_Layout/SubLayout";
+import "emoji-mart/css/emoji-mart.css";
 
 const Home: CustomNextPage = () => {
   return (
