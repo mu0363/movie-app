@@ -3,9 +3,9 @@ import { Footer } from "./Footer";
 import { Header } from "./Header";
 import { LayoutErrorBoundary } from "./LayoutErrorBoundary";
 
-export const MainLayout: VFC = (page) => {
+export const SubLayout: VFC = (page) => {
   return (
-    <div className="relative h-screen text-gray-600 bg-gray-100">
+    <div className="relative h-screen text-gray-600 bg-red-300">
       <Header />
       <main className="mx-auto max-w-4xl">
         <LayoutErrorBoundary>{page}</LayoutErrorBoundary>

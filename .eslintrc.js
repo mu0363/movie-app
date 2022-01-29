@@ -1,10 +1,10 @@
 module.exports = {
-  root: true,
   env: {
     browser: true,
     es2021: true,
   },
   extends: [
+    "next/core-web-vitals",
     "plugin:react/recommended",
     "google",
     "plugin:@typescript-eslint/recommended",
@@ -47,6 +47,7 @@ module.exports = {
     "unused-imports/no-unused-imports": "warn",
     "func-style": ["error", "declaration", { allowArrowFunctions: true }],
     "no-console": ["error", { allow: ["warn", "info", "error"] }],
+    "import/named": "off",
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
     "react/jsx-handler-names": [
