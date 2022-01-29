@@ -7,11 +7,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Fragment, useState, VFC } from "react";
 import { MouseEvent } from "react";
-import { useUser } from "hooks/useUser";
+import { useUser } from "@/hooks/useUser";
 
 export const Header: VFC = () => {
   const { user, signOut } = useUser();
   const [emoji, setEmoji] = useState("");
+  console.info({ user });
 
   const handleSignOut = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
@@ -71,14 +72,8 @@ export const Header: VFC = () => {
               <button className="py-1 px-3 text-white bg-gray-300 rounded-full" onClick={handleSignOut}>
                 Sign out
               </button>
-              <p>{user.user_metadata.full_name}</p>
-              <Image
-                className="rounded-full"
-                src={user.user_metadata.avatar_url}
-                alt="avatar-image"
-                width={30}
-                height={30}
-              />
+              <p>{user.full_name}</p>
+              <Image className="rounded-full" src={user.avatar_url} alt="avatar-image" width={30} height={30} />
             </div>
           )}
         </div>

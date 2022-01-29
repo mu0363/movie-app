@@ -1,8 +1,8 @@
 import type { CustomNextPage } from "next";
 import { ChangeEvent, useState } from "react";
-import { useUser } from "hooks/useUser";
-import { SubLayout } from "pages/_Layout/SubLayout";
-import { supabase } from "utils/supabaseClient";
+import { useUser } from "@/hooks/useUser";
+import { SubLayout } from "@/pages/_Layout/SubLayout";
+import { supabase } from "@/utils/supabaseClient";
 
 const Profile: CustomNextPage = () => {
   const [isLoading, setIsLoading] = useState(false);

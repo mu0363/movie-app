@@ -1,13 +1,13 @@
 import type { CustomNextPage } from "next";
 import { useRouter } from "next/router";
 import { MouseEvent, useEffect, useState } from "react";
-import { useUser } from "hooks/useUser";
-import { MainLayout } from "pages/_Layout";
+import { useUser } from "@/hooks/useUser";
+import { MainLayout } from "@/pages/_Layout";
 
 const SignIn: CustomNextPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { user, signIn, signOut } = useUser();
+  const { user, signIn } = useUser();
 
   const handleSignIn = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

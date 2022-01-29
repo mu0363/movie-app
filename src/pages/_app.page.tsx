@@ -1,8 +1,8 @@
-import "styles/globals.css";
+import "@/styles/globals.css";
 import type { NextComponentType } from "next";
 import { AppContext, AppInitialProps, AppLayoutProps } from "next/app";
 import { ReactNode } from "react";
-import { UserContextProvider } from "hooks/useUser";
+import { UserContextProvider } from "@/hooks/useUser";
 
 const MyApp: NextComponentType<AppContext, AppInitialProps, AppLayoutProps> = ({
   Component,
