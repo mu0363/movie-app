@@ -1,29 +1,11 @@
-import { Session, Provider, User } from "@supabase/supabase-js";
-import { createContext, useContext, useEffect, useState } from "react";
+import { Session, User } from "@supabase/supabase-js";
+import { customAlphabet } from "nanoid";
+import { ChangeEvent, createContext, useContext, useEffect, useState } from "react";
+import { nanoidStrings } from "@/constant";
+import type { DatabaseUser, UpdateUserData, UserContextType } from "@/types";
 import { supabase } from "@/utils/supabaseClient";
 
-type DatabaseUser = {
-  avatar_url: string;
-  created_at: string;
-  email: string;
-  full_name: string;
-  id: string;
-  updated_at: string;
-};
-
-type UserContextType = {
-  session: Session;
-  user: DatabaseUser;
-  signIn: () => Promise<{
-    session: Session | null;
-    user: User | null;
-    provider?: Provider;
-    url?: string | null;
-    error: Error | null;
-    data: Session | null;
-  }>;
-  signOut: () => void;
-};
+const nanoid = customAlphabet(nanoidStrings, 20);
 
 export const UserContext = createContext<UserContextType | undefined>(undefined);
 
@@ -59,11 +41,49 @@ export const UserContextProvider = (props: any) => {
     };
   }, [session]);
 
+  const updateFullName = async (data: UpdateUserData) => {
+    const { data: newUser } = await supabase
+      .from("users")
+      .update({ full_name: data.full_name, updated_at: data.updated_at })
+      .match({ id: data.id })
+      .single();
+    setUser(newUser);
+  };
+
+  const updateAvatar = async (event: ChangeEvent<HTMLInputElement>) => {
+    try {
+      if (!event.target.files || event.target.files.length === 0) {
+        throw new Error("You must select an image to upload.");
+      }
+      // storage に画像をアップロード
+      const file = event.target.files[0];
+      const fileExt = file.name.split(".").pop();
+      const nanoFileName = nanoid();
+      const fileNme = `${nanoFileName}.${fileExt}`;
+
+      const { error } = await supabase.storage.from("avatars").upload(fileNme, file);
+      if (error) {
+        throw Error("error");
+      }
+      const url = await supabase.storage.from("avatars").getPublicUrl(fileNme).publicURL;
+      const { data: newUser } = await supabase
+        .from("users")
+        .update({ avatar_url: url, updated_at: new Date() })
+        .match({ id: user?.id })
+        .single();
+      setUser(newUser);
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   const value = {
     session,
     user,
     signIn: () => supabase.auth.signIn({ provider: "google" }),
     signOut: () => supabase.auth.signOut(),
+    updateFullName,
+    updateAvatar,
   };
 
   return <UserContext.Provider value={value} {...props} />;
